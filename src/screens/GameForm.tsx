@@ -5,31 +5,30 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import {Button, Layout, Text, themeColor, TopNav, useTheme} from "react-native-rapi-ui";
 import {Ionicons} from "@expo/vector-icons";
 import Toast from 'react-native-toast-message';
-import WerewolfLogo from "../components/utils/WerewolfLogo";
+import {storePlayers} from '../provider/PlayersProvider';
+import {showToast} from "./utils/Toast";
 
 export default function ({
   navigation,
 }: NativeStackScreenProps<MainStackParamList, "MainTabs">) {
+
     const { isDarkmode, setTheme } = useTheme();
     const [inputs, setInputs] = useState([{key: '', value: ''}])
     const [isSixPlayers, setIsSixPlayers] = useState(false);
+
+    // @ts-ignore
+    const latestInput = inputs[Object.keys(inputs)[Object.keys(inputs).length - 1]];
 
     // TODO : Limiter le nombre de joueurs
 
     const addHandler = () => {
         const _inputs = [...inputs];
-        // @ts-ignore
-        const latestInput = _inputs[Object.keys(_inputs)[Object.keys(_inputs).length - 1]]; // Récupère la dernière entrée des inputs
 
         if (typeof(latestInput) === "undefined" || latestInput["value"].length >= 2) {
             _inputs.push({key: '', value: ''});
             setInputs(_inputs);
         } else {
-            Toast.show({
-                type: 'error',
-                text1: 'Oups !',
-                text2: 'Le nom d\'un joueur doit contenir au moins deux lettres'
-            });
+            showToast('error', 'Oups !', 'Le nom d\'un joueur doit contenir au moins deux lettres');
         }
 
         if (_inputs.length > 5) {
@@ -51,6 +50,19 @@ export default function ({
         _inputs[key].key = key;
         setInputs(_inputs);
     }
+
+    const launchGame = () => {
+        // Vérification : Si le dernier Input n'est pas rempli, on renvoie une erreur.
+        if (latestInput.value === "" || latestInput.value.length < 2){
+            showToast('error', 'Oups !', 'Un champ est vide - trop court.');
+        }
+
+        // Stocker les joueurs dans l'AsyncStorage puis rediriger vers le jeu.
+        storePlayers(inputs)
+            .then(() => navigation.navigate('Cards'));
+
+    }
+
 
     const styles = StyleSheet.create({
         input: {
@@ -132,6 +144,7 @@ export default function ({
               style={{ marginTop: 10 }}
               text="Lancer la partie"
               status="success"
+              onPress={launchGame}
             /> : <></> }
           <Toast position='top' bottomOffset={20} />
       </View>

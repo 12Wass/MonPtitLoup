@@ -1,0 +1,55 @@
+{
+"cards": {
+        "werewolf": {
+            "title": "Loup-Garou",
+            "description": "Les loups garous doivent gagner entre eux en tuant tous les autres membres du village",
+            "image": "https://picsum.photos/200",
+            "isEvil": true
+        },
+        "villager": {
+            "title": "Villageois",
+            "description": "Les villageois doivent gagner en éliminant tous les loup-garous du village",
+            "image": "https://picsum.photos/200",
+            "isEvil": false
+        },
+        "witch": {
+            "title": "Sorcière",
+            "description": "La sorcière gagne avec le village. Elle dispose de deux potions, une de vie, une de mort",
+            "image": "https://picsum.photos/200",
+            "isEvil": false,
+            "powers": {
+                "potions": {
+                    "kill": true,
+                    "revive": true
+                }
+            }
+        },
+        "hunter": {
+            "title": "Chasseur",
+            "description": "Le chasseur doit éliminer tous les loups garous du village. Il ne peut utiliser son arme qu'au bord de la mort",
+            "image": "https://picsum.photos/200",
+            "isEvil": true,
+            "powers": {
+                "kill": true
+            }
+        },
+        "seer": {
+            "title": "Voyante",
+            "description": "La voyante doit découvrir le role des autres joueurs",
+            "image": "https://picsum.photos/200",
+            "isEvil": false,
+            "power": {
+                "see": true
+            }
+        },
+        "cupid": {
+            "title": "Cupidon",
+            "description": "Cupidon doit gagner avec le couple qu'il choisira.",
+            "image": "https://picsum.photos/200",
+            "isEvil": true,
+            "power": {
+                "love": true
+            }
+        }
+    }
+}

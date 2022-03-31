@@ -23,6 +23,7 @@ export default function ({
               text="Commencer une nouvelle partie"
               status="info"
               onPress={() => {
+                  // @ts-ignore
                   navigation.navigate("GameForm");
               }}
           />
